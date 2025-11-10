@@ -8,7 +8,6 @@ const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const PORT = process.env.PORT || 3000;
 const OPENWEATHER_KEY = process.env.OPENWEATHER_KEY || '';
 if (!OPENWEATHER_KEY) {
   console.warn('⚠️  No OPENWEATHER_KEY found in .env. Weather endpoint will fail without it.');
@@ -116,3 +115,15 @@ app.get('*', (req, res) => {
 });
 
 module.exports = app;
+
+// fallback to index.html for SPA navigation
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Servidor levantado en http://localhost:${PORT}`);
+});
+
+
