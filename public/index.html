@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alumnos + Clima · Posadas</title>
+  <style>
+    :root{--accent:#2b7a78;--muted:#6b6b6b}
+    body{font-family:Inter,system-ui,Arial;margin:0;padding:24px;background:#f7f7fb;color:#111}
+    .container{max-width:900px;margin:0 auto}
+    header{display:flex;align-items:center;gap:16px}
+    h1{margin:0;font-size:1.4rem}
+    .card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 4px 18px rgba(9,10,15,0.06);margin-top:18px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .col{flex:1;min-width:220px}
+    label{display:block;font-size:0.85rem;margin-bottom:6px;color:var(--muted)}
+    input, select, button{width:100%;padding:10px;border-radius:8px;border:1px solid #e0e0e6;font-size:1rem}
+    button{background:var(--accent);color:#fff;border:none;cursor:pointer}
+    .students-list{margin-top:12px}
+    .student{padding:8px;border-bottom:1px dashed #eee;display:flex;justify-content:space-between}
+    .muted{color:var(--muted);font-size:0.9rem}
+    .weather-top{display:flex;align-items:center;gap:12px}
+    .weather-icon{width:64px;height:64px}
+    form.inline{display:flex;gap:8px}
+    .small{width:140px}
+    .error{color:#b00020}
+    .unidad6{background:#fff;border-radius:12px;padding:16px;box-shadow:0 4px 18px rgba(9,10,15,0.06);margin-top:18px;img{align-items:center;}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Gestor de Alumnos + Clima (Posadas, Misiones)</h1>
+    </header>
+
+    <!-- Weather card -->
+    <div class="card" id="weather-card">
+      <div class="weather-top">
+        <img id="weather-icon" class="weather-icon" src="" alt="" style="display:none"/>
+        <div>
+          <div id="weather-location" style="font-weight:700">Posadas, AR</div>
+          <div id="weather-desc" class="muted">Cargando clima...</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <form id="city-search" class="inline" onsubmit="return false;">
+          <input id="city-input" placeholder="Buscar otra ciudad (ej: Buenos Aires, AR)" />
+          <button id="city-btn" class="small">Buscar</button>
+        </form>
+        <div id="weather-details" class="muted" style="margin-top:10px"></div>
+      </div>
+    </div>
+
+    <!-- Students form -->
+    <div class="card">
+      <h3>Agregar alumno</h3>
+      <form id="student-form">
+        <div class="row">
+          <div class="col">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" required />
+          </div>
+          <div class="col">
+            <label for="apellido">Apellido</label>
+            <input id="apellido" name="apellido" required />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+          <div class="col">
+            <label for="materia">Carrera</label>
+            <input id="materia" name="materia" required />
+          </div>
+          <div class="col">
+            <label for="anio">Año</label>
+            <input id="anio" name="anio" type="number" min="1" step="1" required />
+          </div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px;">
+          <button type="submit">Agregar</button>
+          <button type="button" id="clear-btn">Limpiar</button>
+          <div id="form-msg" class="muted" style="align-self:center"></div>
+        </div>
+      </form>
+
+      <div class="students-list card" style="margin-top:14px;">
+        <h4 style="margin-top:0">Alumnos registrados</h4>
+        <div id="students-container" class="muted">Cargando...</div>
+      </div>
+    </div>
+    <div class="unidad6">
+      <h1>IESA Educativo</h1>
+      <p>IESA de las siglas Instituto de Estudios Superiores Argentino es un establecimiento terciario de enseñansa publica 
+        de gestion privada, fundada en el año 2003 en Posadas, Misiones. Su compromiso es con la excelencia educativa y la fomracion
+        integral de sus estudiantes, preparandolos para enfrentar los desafios del mundo laboral actual.
+      </p>
+      <h1>Unidad 6</h1>
+      <h2>Que es la IA generativa?</h2>
+      <p>La IA generativa es un tipo de inteligencia artificial que crea contenido nuevo, como texto, imágenes, música y codigo,
+        aprender patrones y relaciones a partir de grandes cantidades de datos. A diferencia de otras IA que solo analizan informacion,
+        la IA generativa utiliza modelos de aprendizaje automatico para generar resultados originales que pueden imitar la expresion humana.
+
+        Varios ejemplos de estas IAs generativas son ChatGPT, Copilot, MetaIA, DeepSeek y muchas mas. A todas estas IAs son capaces de crear
+        texto desde cero, crear imagenes y hacernos nuestros trabajos muchos mas faciles. Ejemplos utiles son pedirle ayuda para crear logos
+        y tener una imagen con que empezar. Tambien puede crear codigo de progamacion para tener una base donde empezara trabajar. Buscar
+        informacion es mas facil que nunca gracias a estas IAs aunque, ya que aun estan en desarrollo, no es recomendable al 100% confiar
+        en la infomracion dada, sino que revises las fuentes de donde saca la informacion.
+      </p>
+      <img src="iesalogo.png" alt="logo del iesa" style="width: 300px;">
+      <h2>Uso ético y responsable</h2>
+      <p>La IA debe ser usada como una herramienta de ayuda, no como una manera de hacer tus estudios autoamticos. A esto me refiero
+        que si, el uso de la IA no es controlado, podemos estar delante de una generacion de estudiantes los cuales aprobaron con IA
+        y en verdad no aprendieron nada durante sus años de estudios. Esto tambien puede ser aplicado al ámbito laboral donde un trabajador
+        puede hacer su trabajo con IA. No hay que ser completamente ajenos a las nuevas tecnologias pero si aprender a usarlas correctamente
+        para evitar posibles problemas a futuro. 
+      </p>
+      <h2>La IA prodria reemplazar al humano?</h2>
+      <p>Esta es una pregunta que es muy discutida y temida durante los ultimos tiempos. La IA al ser tan rapida y automatizada en sus 
+        ambitos, se teoriza que pueda llegar a reemplazar trabajos que hoy en dia lo hacen personas capacitadas. La respuesta rapida es 
+        de pende, hay trabajos que si podran ser facilmente reemplazados gracias a que son mecanicos y simples y una IA podria hacerla
+        de manera efectiva y constante. Luego existe la otra cara de la moneda, los trabajos en el que es muy importante el factor humano,
+        donde la IA no tiene el nivel de reflexion y sentimientos que un humano puede sentir y hacer la diferencia.
+      </p>
+      <img src="inteligencia-artificial-y-robótica-concepto.png" alt="IA con humanos" style="width: 300px;">
+    </div>
+  </div>
+
+
+
+  <script>
+    const API_ROOT = ''; // asume mismo host (si pones servidor remoto, reemplaza la URL)
+
+    // Weather logic
+    async function fetchWeather(city = 'Posadas', country = 'AR') {
+      try {
+        const q = encodeURIComponent(city);
+        const url = `${API_ROOT}/weather?city=${q}&country=${encodeURIComponent(country)}`;
+        const r = await fetch(url);
+        if (!r.ok) {
+          const text = await r.text();
+          showWeatherError(text || 'Error al obtener clima');
+          return;
+        }
+        const data = await r.json();
+        renderWeather(data);
+      } catch (err) {
+        showWeatherError('Error de conexión');
+        console.error(err);
+      }
+    }
+
+    function renderWeather(d) {
+      const loc = document.getElementById('weather-location');
+      const desc = document.getElementById('weather-desc');
+      const details = document.getElementById('weather-details');
+      const icon = document.getElementById('weather-icon');
+
+      loc.textContent = `${d.city}${d.country ? ', ' + d.country : ''}`;
+      desc.textContent = `${d.weather || ''} — ${d.temp != null ? d.temp + '°C' : ''}`;
+      details.textContent = `Sensación: ${d.feels_like ?? '-'}°C · Humedad: ${d.humidity ?? '-'}%`;
+      if (d.icon) {
+        icon.src = `https://openweathermap.org/img/wn/${d.icon}@2x.png`;
+        icon.style.display = 'block';
+      } else icon.style.display = 'none';
+    }
+
+    function showWeatherError(msg) {
+      document.getElementById('weather-desc').textContent = msg;
+      document.getElementById('weather-details').textContent = '';
+      document.getElementById('weather-icon').style.display = 'none';
+    }
+
+    // City search
+    document.getElementById('city-btn').addEventListener('click', () => {
+      const val = document.getElementById('city-input').value.trim();
+      if (!val) return;
+      // If user includes comma with country, split. Otherwise try AR as default
+      const parts = val.split(',').map(s => s.trim());
+      const city = parts[0];
+      const country = parts[1] || 'AR';
+      fetchWeather(city, country);
+    });
+
+    // Students logic
+    async function loadStudents() {
+      const container = document.getElementById('students-container');
+      container.textContent = 'Cargando...';
+      try {
+        const r = await fetch(`${API_ROOT}/api/students`);
+        if (!r.ok) throw new Error(await r.text());
+        const rows = await r.json();
+        if (!rows.length) { container.innerHTML = '<div class="muted">No hay alumnos aún</div>'; return; }
+        container.innerHTML = '';
+        rows.forEach(s => {
+          const div = document.createElement('div');
+          div.className = 'student';
+          div.innerHTML = `<div><strong>${s.nombre} ${s.apellido}</strong><div class="muted">${s.materia} · Año ${s.anio}</div></div>
+                           <div class="muted">${new Date(s.created_at).toLocaleString()}</div>`;
+          container.appendChild(div);
+        });
+      } catch (err) {
+        container.textContent = 'Error cargando alumnos';
+        console.error(err);
+      }
+    }
+
+    document.getElementById('student-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const materia = document.getElementById('materia').value.trim();
+      const anio = document.getElementById('anio').value.trim();
+
+      const msg = document.getElementById('form-msg');
+      msg.textContent = '';
+
+      try {
+        const r = await fetch(`${API_ROOT}/api/students`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, apellido, materia, anio })
+        });
+        if (!r.ok) {
+          const err = await r.json().catch(()=>({error:'error'}));
+          msg.textContent = err.error || 'Error al guardar';
+          msg.className = 'error';
+          return;
+        }
+        const saved = await r.json();
+        msg.textContent = 'Guardado ✓';
+        msg.className = 'muted';
+        document.getElementById('student-form').reset();
+        loadStudents();
+      } catch (err) {
+        console.error(err);
+        msg.textContent = 'Error de conexión';
+        msg.className = 'error';
+      }
+    });
+
+    document.getElementById('clear-btn').addEventListener('click', () => {
+      document.getElementById('student-form').reset();
+      document.getElementById('form-msg').textContent = '';
+    });
+
+    // init
+    fetchWeather('Posadas','AR');
+    loadStudents();
+  </script>
+</body>
+</html>
